@@ -12,7 +12,7 @@ namespace UnityEngine.XR.Hands.Samples.Gestures.DebugTools
         public Handedness trackedHand;
         public XRFingerShape[] fingerShapes;
         public List<float> tipCurls;
-        public float thumbSpread;
+        public float indexSpread;
         public TextMeshPro display;
         // Start is called before the first frame update
         void Start()
@@ -38,9 +38,9 @@ namespace UnityEngine.XR.Hands.Samples.Gestures.DebugTools
                     (XRHandFingerID)fingerIndex, XRFingerShapeTypes.All);
                 UpdateFinger(fingerIndex);
             }
-            var shapes = fingerShapes[(int)XRHandFingerID.Thumb];
+            var shapes = fingerShapes[(int)XRHandFingerID.Index];
             if (shapes.TryGetSpread(out var spread)){
-                thumbSpread = spread;
+                indexSpread = spread;
             }
             // fingerShapes[0].TryGetBaseCurl(out float baseCurl);
             // var shapes = fingerShapes[1];
