@@ -18,8 +18,10 @@ public class GambitCard : MonoBehaviour
     public bool isHeld;
     public Vector3 anchorPoint;
     public Rigidbody rb;
+    public bool active;
     public List<Vector3> velocities;
     public LayerMask homingLayers;
+    public LayerMask groundLayers;
     // Start is called before the first frame update
     void Start()
     {
@@ -104,20 +106,45 @@ public class GambitCard : MonoBehaviour
         }
         rb.drag = 1.2f;
         rb.angularVelocity = new Vector3(0, rb.velocity.magnitude * 3, 0);
+        active = true;
         StartCoroutine(SeekTarget());
     }
 
     public IEnumerator SeekTarget()
     {
-        while(true){
+        GameObject target = null;
+        while(active){
             if(rb.velocity.magnitude < 9.81f){
                 rb.velocity += new Vector3(0,-Mathf.Max(0, 9.81f - rb.velocity.magnitude * 2),0) * Time.deltaTime;
             }
-            if(Physics.OverlapSphere(transform.position, 5, homingLayers) != null){
-                Debug.Log("Gottem");
+            //Debug.Log(target);
+            if(target == null){
+                Collider[] inRange = Physics.OverlapSphere(transform.position, 5, homingLayers);
+                if(inRange != null){
+                    float bestDist = int.MaxValue;
+                    foreach(Collider col in inRange){
+                        GameObject potentialTarget = col.gameObject;
+                        if(Vector3.Distance(transform.position, potentialTarget.transform.position) < bestDist){
+                            bestDist = Vector3.Distance(transform.position, potentialTarget.transform.position);
+                            target = potentialTarget;
+                            Debug.Log(target);
+                        }
+                    }
+                }
+            } else {
+                Debug.Log("Homing");
+			    rb.AddRelativeForce((target.transform.position - transform.position).normalized * Time.deltaTime * 100, ForceMode.Force);
             }
             yield return 0;
         }
+    }
+
+    public IEnumerator DelayedDelete(float duration)
+    {
+        rb.isKinematic = true;
+        //trail.emitting = false;
+        yield return new WaitForSeconds(duration);
+        Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider hit)
@@ -127,6 +154,17 @@ public class GambitCard : MonoBehaviour
             anchorPoint = contactPoint + transform.position;
             isHeld = true;
             StartCoroutine(Held());
+        }
+    }
+
+    void OnCollisionEnter(Collision hit)
+    {
+        if(( homingLayers & (1 << hit.gameObject.layer)) != 0 && active == true){
+            //hit
+        } else if(( groundLayers & (1 << hit.gameObject.layer)) != 0){
+            transform.parent = hit.transform;
+            active = false;
+            StartCoroutine(DelayedDelete(5));
         }
     }
 }

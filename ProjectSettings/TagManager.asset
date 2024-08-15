@@ -14,11 +14,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Drone
+  - Enemy
+  - Player
+  - Ground
   - Obstacle
-  - 
-  - 
-  - 
+  - Projectile
   - 
   - 
   - 
