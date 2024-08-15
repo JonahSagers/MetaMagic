@@ -7,6 +7,7 @@ public class DeckManager : MonoBehaviour
     public GameObject cardPre;
     public Vector3 cardOffset;
     public GameObject card;
+    public string gesture;
 
     [Header("Left Hand")]
     public Collider thumb;
@@ -24,5 +25,15 @@ public class DeckManager : MonoBehaviour
         card = Instantiate(cardPre, transform.position, transform.rotation);
         card.transform.parent = transform;
         card.transform.localPosition = cardOffset;
+    }
+
+    public void TwoPoint()
+    {
+        gesture = "twopoint";
+    }
+
+    public void TwoPointEnd()
+    {
+        gesture = "none";
     }
 }

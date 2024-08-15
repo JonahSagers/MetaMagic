@@ -304,7 +304,7 @@ Transform:
   m_GameObject: {fileID: 129658763}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -329,7 +329,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.007
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &139385523
 GameObject:
@@ -928,6 +928,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5578420572533460082}
     m_Modifications:
+    - target: {fileID: 513866637, guid: 3f7511fbc40ae7a4b89c3298a3de199d, type: 3}
+      propertyPath: m_UpdateType
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 463836154022461713, guid: 3f7511fbc40ae7a4b89c3298a3de199d, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -2649,6 +2653,7 @@ MonoBehaviour:
   cardPre: {fileID: 3278524845259876588, guid: 09bd91cda451f4f46a838c7b7ba08c7c, type: 3}
   cardOffset: {x: 0, y: -0.0075, z: 0}
   card: {fileID: 0}
+  gesture: 
   thumb: {fileID: 129658765}
   index: {fileID: 1672021422}
   middle: {fileID: 981879837}
@@ -2869,6 +2874,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5578420572533460082}
     m_Modifications:
+    - target: {fileID: 639686448, guid: b3ed8a0a703ebd34a9e44ed3d9f1fcf6, type: 3}
+      propertyPath: m_UpdateType
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 141466980049140221, guid: b3ed8a0a703ebd34a9e44ed3d9f1fcf6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3447,9 +3456,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DroneCommand, Assembly-CSharp
-        m_MethodName: LeftManual
-        m_Mode: 1
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+        m_MethodName: 
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3461,7 +3470,7 @@ MonoBehaviour:
   m_GestureEnded:
     m_PersistentCalls:
       m_Calls: []
-  m_MinimumHoldTime: 0.05
+  m_MinimumHoldTime: 0.01
   m_GestureDetectionInterval: 0.01
   m_StaticGestures: []
   m_Highlight: {fileID: 0}
@@ -4539,9 +4548,9 @@ MonoBehaviour:
           m_StringArgument: Two Point
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DroneCommand, Assembly-CSharp
-        m_MethodName: RightManual
+      - m_Target: {fileID: 798340783}
+        m_TargetAssemblyTypeName: DeckManager, Assembly-CSharp
+        m_MethodName: TwoPoint
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4553,8 +4562,32 @@ MonoBehaviour:
         m_CallState: 2
   m_GestureEnded:
     m_PersistentCalls:
-      m_Calls: []
-  m_MinimumHoldTime: 0.05
+      m_Calls:
+      - m_Target: {fileID: 798340783}
+        m_TargetAssemblyTypeName: DeckManager, Assembly-CSharp
+        m_MethodName: TwoPointEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1218191695}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: None
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_MinimumHoldTime: 0.01
   m_GestureDetectionInterval: 0.01
   m_StaticGestures: []
   m_Highlight: {fileID: 0}

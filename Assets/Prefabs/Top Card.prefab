@@ -102,6 +102,8 @@ MonoBehaviour:
   hitbox: {fileID: 7606274283372923567}
   thumb: {fileID: 0}
   index: {fileID: 0}
+  curlDetection: {fileID: 0}
+  indexSpread: 0
   middle: {fileID: 0}
   isHeld: 0
   anchorPoint: {x: 0, y: 0, z: 0}
@@ -126,7 +128,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &38229302375477712
 Rigidbody:
