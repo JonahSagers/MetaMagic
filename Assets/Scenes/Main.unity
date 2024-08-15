@@ -2964,6 +2964,7 @@ MonoBehaviour:
   card: {fileID: 0}
   gesture: 
   heldCards: 0
+  airCards: 0
   thumb: {fileID: 129658765}
   index: {fileID: 1672021422}
   middle: {fileID: 981879837}
@@ -4012,7 +4013,7 @@ Transform:
   m_GameObject: {fileID: 981879835}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.004, z: -0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4037,7 +4038,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.012
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1094894561
 GameObject:
@@ -5494,7 +5495,7 @@ Transform:
   m_GameObject: {fileID: 1672021420}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000031432133, y: -0.0000000018626449, z: 0.000000003361492, w: 1}
-  m_LocalPosition: {x: -0.00029488167, y: -0.0010248687, z: -0.022363868}
+  m_LocalPosition: {x: 0.0019, y: -0.0031, z: -0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5519,7 +5520,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.005
+  m_Radius: 0.012
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1730836188
 GameObject:

@@ -42,20 +42,26 @@ public class GambitCard : MonoBehaviour
         indexSpread = curlDetection.indexSpread;
     }
 
-    public IEnumerator Held()
+    public IEnumerator Held(Collider finger)
     {
-        while(transform.localPosition.x + transform.localPosition.z < 0.05f){
+        while(Mathf.Sqrt(transform.localPosition.x * transform.localPosition.x + transform.localPosition.z * transform.localPosition.z) < ((finger == thumb) ? 0.04f : 0.15f)){
             Vector3 lastPos = transform.position;
-            transform.position = thumb.transform.position + anchorPoint;
+            transform.position = finger.transform.position + anchorPoint;
             transform.localPosition = new Vector3(transform.localPosition.x, -0.0075f, transform.localPosition.z);
             transform.localEulerAngles = new Vector3(0, (transform.localPosition.x + transform.localPosition.z) * 1000, 0);
             velocities.Add(transform.position - lastPos);
-            if(velocities.Count > 10){
+            if(velocities.Count > 5){
                 velocities.RemoveAt(0);
             }
             yield return 0;
         }
-        StartCoroutine(SoftToss());
+        if(finger == thumb){
+            StartCoroutine(SoftToss());
+        } else {
+            deckManager.Draw();
+            StartCoroutine(SeekTarget(1));
+        }
+        
     }
 
     public IEnumerator SoftToss()
@@ -107,25 +113,25 @@ public class GambitCard : MonoBehaviour
             if(velocities[velocities.Count - 1].magnitude > 0.06f){
                 throwing = true;
             }
-            if(velocities.Count > 10){
+            if(velocities.Count > 5){
                 velocities.RemoveAt(0);
             }
             lastPos = transform.position;
             yield return 0;
         }
+        StartCoroutine(SeekTarget(1));
+    }
+
+    public IEnumerator SeekTarget(float multiplier)
+    {
         transform.parent = null;
         foreach(Vector3 vel in velocities){
-            rb.velocity += vel * 60;
+            rb.velocity += vel * 60 * multiplier;
         }
         rb.velocity += Random.onUnitSphere * (deckManager.heldCards - 1);
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, 20);
         rb.drag = 1.2f;
         rb.angularVelocity = new Vector3(0, rb.velocity.magnitude * 3, 0);
-        StartCoroutine(SeekTarget());
-    }
-
-    public IEnumerator SeekTarget()
-    {
         trail.emitting = true;
         GameObject target = null;
         deckManager.heldCards -= 1;
@@ -173,13 +179,13 @@ public class GambitCard : MonoBehaviour
             Vector3 contactPoint = -hitbox.ClosestPointOnBounds(thumb.transform.position);
             anchorPoint = contactPoint + transform.position;
             isHeld = true;
-            StartCoroutine(Held());
+            StartCoroutine(Held(hit));
         }
         if((hit == middle || hit == index) && deckManager.gesture == "twopoint" && isHeld == false){
             Vector3 contactPoint = -hitbox.ClosestPointOnBounds(hit.transform.position);
             anchorPoint = contactPoint + transform.position;
             isHeld = true;
-            StartCoroutine(Held());
+            StartCoroutine(Held(hit));
         }
     }
 
