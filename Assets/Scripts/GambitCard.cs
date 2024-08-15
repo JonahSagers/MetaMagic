@@ -59,7 +59,7 @@ public class GambitCard : MonoBehaviour
             StartCoroutine(SoftToss());
         } else {
             deckManager.Draw();
-            StartCoroutine(SeekTarget(1));
+            StartCoroutine(SeekTarget(1.25f));
         }
         
     }
