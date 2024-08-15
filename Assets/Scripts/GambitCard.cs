@@ -65,26 +65,35 @@ public class GambitCard : MonoBehaviour
         foreach(Vector3 vel in velocities){
             rb.velocity += vel * 50;
         }
+        deckManager.airCards += 1;
         rb.angularVelocity = new Vector3(0, (transform.localEulerAngles.y / Mathf.Abs(transform.localEulerAngles.y)) * rb.velocity.magnitude * 3, 0);
         velocities.Clear();
         deckManager.Draw();
-        while(deckManager.gesture != "twopoint"){
-            yield return 0;
+        if(deckManager.airCards + deckManager.heldCards < 52){
+            while(deckManager.gesture != "twopoint"){
+                yield return 0;
+            }
+            float elapsed = 0.2f;
+            rb.angularDrag = 4;
+            while(elapsed <= 1.4f){
+                transform.position = Vector3.Lerp(transform.position, Vector3.Lerp(index.transform.position, middle.transform.position, 0.5f), Mathf.Pow(elapsed - 0.1f, 2) -0.4f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(middle.transform.eulerAngles), elapsed * elapsed);
+                elapsed += Mathf.Min(Time.deltaTime * 2, 1.4f - Time.deltaTime);
+                yield return 0;
+            }
+            transform.parent = middle.transform;
+            rb.angularVelocity = Vector3.zero;
+            rb.angularDrag = 0;
+            deckManager.airCards -= 1;
+            deckManager.heldCards += 1;
+            rb.velocity = Vector3.zero;
+            StartCoroutine(Primed());
+        } else {
+            rb.drag = 1;
+            deckManager.airCards -= 1;
+            rb.useGravity = true;
+            hitbox.isTrigger = false;
         }
-        float elapsed = 0.2f;
-        rb.angularDrag = 4;
-        while(elapsed <= 1.4f){
-            transform.position = Vector3.Lerp(transform.position, Vector3.Lerp(index.transform.position, middle.transform.position, 0.5f), Mathf.Pow(elapsed - 0.1f, 2) -0.4f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(middle.transform.eulerAngles), elapsed * elapsed);
-            elapsed += Mathf.Min(Time.deltaTime * 2, 1.4f - Time.deltaTime);
-            yield return 0;
-        }
-        transform.parent = middle.transform;
-        rb.angularVelocity = Vector3.zero;
-        rb.angularDrag = 0;
-        deckManager.heldCards += 1;
-        rb.velocity = Vector3.zero;
-        StartCoroutine(Primed());
     }
 
     public IEnumerator Primed()

@@ -9,6 +9,7 @@ public class DeckManager : MonoBehaviour
     public GameObject card;
     public string gesture;
     public int heldCards;
+    public int airCards;
 
     [Header("Left Hand")]
     public Collider thumb;
