@@ -8,6 +8,7 @@ public class GambitCard : MonoBehaviour
 {
     public DeckManager deckManager;
     public Collider hitbox;
+    public GameObject damageIndicator;
     [Header("Left Hand")]
     public Collider thumb;
     [Header("Right Hand")]
@@ -111,7 +112,6 @@ public class GambitCard : MonoBehaviour
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, 20);
         rb.drag = 1.2f;
         rb.angularVelocity = new Vector3(0, rb.velocity.magnitude * 3, 0);
-        Debug.Log("Thrown at speed: " + rb.velocity.magnitude);
         StartCoroutine(SeekTarget());
     }
 
@@ -127,7 +127,6 @@ public class GambitCard : MonoBehaviour
             if(rb.velocity.magnitude < 9.81f){
                 rb.velocity += new Vector3(0,-Mathf.Max(0, 9.81f - rb.velocity.magnitude * 2),0) * Time.deltaTime;
             }
-            //Debug.Log(target);
             if(target == null && rb.velocity.magnitude > 7){
                 Collider[] inRange = Physics.OverlapSphere(transform.position, 10, homingLayers);
                 if(inRange != null){
@@ -167,12 +166,20 @@ public class GambitCard : MonoBehaviour
             isHeld = true;
             StartCoroutine(Held());
         }
+        if((hit == middle || hit == index) && deckManager.gesture == "twopoint" && isHeld == false){
+            Vector3 contactPoint = -hitbox.ClosestPointOnBounds(hit.transform.position);
+            anchorPoint = contactPoint + transform.position;
+            isHeld = true;
+            StartCoroutine(Held());
+        }
     }
 
     void OnCollisionEnter(Collision hit)
     {
         if(( enemyLayers & (1 << hit.gameObject.layer)) != 0 && active == true){
             //add damage stuff here
+            GameObject indicator = Instantiate(damageIndicator, transform.position, Quaternion.identity);
+            indicator.GetComponent<DamageIndicator>().StartCoroutine(indicator.GetComponent<DamageIndicator>().DisplayDamage(Random.Range(1,13)));
             transform.parent = hit.transform;
             active = false;
             StartCoroutine(DelayedDelete(5));
