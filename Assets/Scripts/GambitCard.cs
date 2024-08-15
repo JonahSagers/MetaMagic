@@ -125,7 +125,7 @@ public class GambitCard : MonoBehaviour
             }
             //Debug.Log(target);
             if(target == null){
-                Collider[] inRange = Physics.OverlapSphere(transform.position, rb.velocity.magnitude/2, homingLayers);
+                Collider[] inRange = Physics.OverlapSphere(transform.position, 10, homingLayers);
                 if(inRange != null){
                     float bestDist = int.MaxValue;
                     foreach(Collider col in inRange){
