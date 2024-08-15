@@ -8,6 +8,7 @@ public class DeckManager : MonoBehaviour
     public Vector3 cardOffset;
     public GameObject card;
     public string gesture;
+    public int heldCards;
 
     [Header("Left Hand")]
     public Collider thumb;

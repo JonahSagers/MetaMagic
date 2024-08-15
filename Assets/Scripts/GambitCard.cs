@@ -81,6 +81,7 @@ public class GambitCard : MonoBehaviour
         transform.parent = middle.transform;
         rb.angularVelocity = Vector3.zero;
         rb.angularDrag = 0;
+        deckManager.heldCards += 1;
         rb.velocity = Vector3.zero;
         StartCoroutine(Primed());
     }
@@ -106,6 +107,7 @@ public class GambitCard : MonoBehaviour
         foreach(Vector3 vel in velocities){
             rb.velocity += vel * 60;
         }
+        rb.velocity += Random.onUnitSphere * (deckManager.heldCards - 1);
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, 20);
         rb.drag = 1.2f;
         rb.angularVelocity = new Vector3(0, rb.velocity.magnitude * 3, 0);
@@ -117,14 +119,16 @@ public class GambitCard : MonoBehaviour
     {
         trail.emitting = true;
         GameObject target = null;
+        deckManager.heldCards -= 1;
         hitbox.isTrigger = false;
         active = true;
+        float elapsed = 0;
         while(active){
             if(rb.velocity.magnitude < 9.81f){
                 rb.velocity += new Vector3(0,-Mathf.Max(0, 9.81f - rb.velocity.magnitude * 2),0) * Time.deltaTime;
             }
             //Debug.Log(target);
-            if(target == null){
+            if(target == null && rb.velocity.magnitude > 7){
                 Collider[] inRange = Physics.OverlapSphere(transform.position, 10, homingLayers);
                 if(inRange != null){
                     float bestDist = int.MaxValue;
@@ -136,9 +140,12 @@ public class GambitCard : MonoBehaviour
                         }
                     }
                 }
-            } else {
+            } else if(target != null && elapsed < 0.4f){
+                elapsed += Time.deltaTime;
                 rb.drag = 3 + rb.velocity.magnitude / 15;
 			    rb.AddForce((target.transform.position - transform.position).normalized * Time.deltaTime * 350 * rb.velocity.magnitude, ForceMode.Force);
+            } else if(elapsed >= 0.4f){
+                rb.drag = 1.2f;
             }
             yield return 0;
         }
