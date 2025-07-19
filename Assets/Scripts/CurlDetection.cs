@@ -13,6 +13,7 @@ namespace UnityEngine.XR.Hands.Samples.Gestures.DebugTools
         public XRFingerShape[] fingerShapes;
         public List<float> tipCurls;
         public float indexSpread;
+        public float indexPinch;
         public TextMeshPro display;
         // Start is called before the first frame update
         void Start()
@@ -28,7 +29,8 @@ namespace UnityEngine.XR.Hands.Samples.Gestures.DebugTools
         void Update()
         {
             var subsystem = TryGetSubsystem();
-            if (subsystem == null){
+            if (subsystem == null)
+            {
                 return;
             }
             var hand = trackedHand == Handedness.Left ? subsystem.leftHand : subsystem.rightHand;
@@ -39,8 +41,12 @@ namespace UnityEngine.XR.Hands.Samples.Gestures.DebugTools
                 UpdateFinger(fingerIndex);
             }
             var shapes = fingerShapes[(int)XRHandFingerID.Index];
-            if (shapes.TryGetSpread(out var spread)){
+            if (shapes.TryGetSpread(out var spread))
+            {
                 indexSpread = spread;
+            }
+            if (shapes.TryGetPinch(out var pinch)){
+                indexPinch = pinch;
             }
             // fingerShapes[0].TryGetBaseCurl(out float baseCurl);
             // var shapes = fingerShapes[1];
