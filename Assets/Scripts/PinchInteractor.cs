@@ -11,6 +11,7 @@ public class PinchInteractor : MonoBehaviour
     public Vector3 rotationOffset;
 
     public CurlDetection handData;
+    private Coroutine dragRoutine;
 
     // Start is called before the first frame update
     void Start()
@@ -25,5 +26,19 @@ public class PinchInteractor : MonoBehaviour
         transform.rotation = wrist.rotation;
         transform.Rotate(rotationOffset);
         Debug.DrawLine(transform.position, transform.position + transform.forward);
+
+        if (handData.indexPinch > 0.5f && dragRoutine == null)
+        {
+            dragRoutine = StartCoroutine(DragItem());
+        }
+    }
+
+    public IEnumerator DragItem()
+    {
+        while (handData.indexPinch > 0.5f)
+        {
+            yield return 0;
+        }
+        dragRoutine = null;
     }
 }
