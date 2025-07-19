@@ -13,6 +13,9 @@ public class PinchInteractor : MonoBehaviour
     public CurlDetection handData;
     private Coroutine dragRoutine;
 
+    public LineRenderer tether;
+    public Transform target;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +40,7 @@ public class PinchInteractor : MonoBehaviour
     {
         while (handData.indexPinch > 0.5f)
         {
+
             yield return 0;
         }
         dragRoutine = null;

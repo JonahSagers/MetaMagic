@@ -250,12 +250,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91571947}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
+  m_LocalPosition: {x: 0, y: -2.9578402, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 850522005}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &91571949
 MonoBehaviour:
@@ -273,7 +273,9 @@ MonoBehaviour:
   thumbPos: {fileID: 1045444077}
   wrist: {fileID: 95564317}
   rotationOffset: {x: 50, y: 10, z: 0}
-  handData: {fileID: 0}
+  handData: {fileID: 1330383859}
+  tether: {fileID: 0}
+  target: {fileID: 451448988}
 --- !u!4 &95564317 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2468282021181825328, guid: 3f7511fbc40ae7a4b89c3298a3de199d, type: 3}
@@ -1744,9 +1746,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2321527512367231968, guid: 3f7511fbc40ae7a4b89c3298a3de199d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1951011061}
-    - targetCorrespondingSourceObject: {fileID: 2321527512367231968, guid: 3f7511fbc40ae7a4b89c3298a3de199d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 91571948}
     - targetCorrespondingSourceObject: {fileID: 2468282021181825328, guid: 3f7511fbc40ae7a4b89c3298a3de199d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1751136443}
@@ -2208,6 +2207,7 @@ MonoBehaviour:
   - 0
   - 0
   indexSpread: 0
+  indexPinch: 0
   display: {fileID: 0}
 --- !u!1 &1330383857
 GameObject:
@@ -2261,6 +2261,7 @@ MonoBehaviour:
   - 0
   - 0
   indexSpread: 0
+  indexPinch: 0
   display: {fileID: 0}
 --- !u!1 &1399182084 stripped
 GameObject:
@@ -3867,6 +3868,7 @@ SceneRoots:
   - {fileID: 995177319}
   - {fileID: 1154366614}
   - {fileID: 442303337}
+  - {fileID: 91571948}
   - {fileID: 649513802}
   - {fileID: 1795258799}
   - {fileID: 451448988}
